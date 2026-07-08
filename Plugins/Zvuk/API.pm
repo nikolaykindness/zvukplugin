@@ -109,9 +109,27 @@ sub getToken {
 }
 
 sub getQuality {
-	my $quality = $prefs->get('quality') || 'flac';
+	my $quality = $prefs->get('quality') || 'high';
 	return $quality if $quality =~ /^(?:flac|high|mid)$/;
-	return 'flac';
+	return 'high';
+}
+
+sub qualityToExtension {
+	my ($quality) = @_;
+	return $quality eq 'flac' ? 'flac' : 'mp3';
+}
+
+sub formatFromStreamUrl {
+	my ($streamUrl) = @_;
+	return 'flc' if $streamUrl && $streamUrl =~ /streamfl/i;
+	return 'mp3';
+}
+
+sub getTrackUri {
+	my ( $trackId, $quality ) = @_;
+	return unless $trackId;
+	$quality ||= getQuality();
+	return 'zvuk://' . $trackId . '.' . qualityToExtension($quality);
 }
 
 sub _headers {
@@ -243,27 +261,61 @@ sub graphql {
 
 sub getTrackUrl {
 	my ( $trackId, $quality ) = @_;
-	$quality ||= getQuality();
+	return unless $trackId;
+
+	my @qualities = ( $quality || getQuality(), qw(high mid flac) );
+	my %seen;
+	@qualities = grep { defined $_ && $_ ne '' && !$seen{$_}++ } @qualities;
+
+	for my $q (@qualities) {
+		my $streamUrl = _fetchStreamUrl( $trackId, $q );
+		return $streamUrl if $streamUrl;
+	}
+
+	return;
+}
+
+sub getTrackStream {
+	my ($trackId) = @_;
+	my $streamUrl = getTrackUrl($trackId);
+	return unless $streamUrl;
+	return ( $streamUrl, formatFromStreamUrl($streamUrl) );
+}
+
+sub _fetchStreamUrl {
+	my ( $trackId, $quality ) = @_;
 
 	my @headers = _requestHeaders();
 	return unless @headers;
 
-	my $url = STREAM_URL . '?id=' . $trackId . '&quality=' . $quality;
+	my $url = STREAM_URL . '?id=' . URI::Escape::uri_escape($trackId) . '&quality=' . URI::Escape::uri_escape($quality);
 
-	my $result = Slim::Networking::SimpleSyncHTTP->new->get(
-		$url,
-		@headers,
-	);
+	for my $attempt ( 1 .. 3 ) {
+		my $result = Slim::Networking::SimpleSyncHTTP->new->get(
+			$url,
+			@headers,
+		);
 
-	if ( !$result->is_success ) {
-		$log->warn("Stream request failed for track $trackId: " . $result->status_line);
+		if ( $result->code == 418 && $attempt < 3 ) {
+			main::DEBUGLOG && $log->is_debug && $log->debug("Stream request got 418, retry $attempt");
+			sleep 2;
+			next;
+		}
+
+		if ( !$result->is_success ) {
+			main::DEBUGLOG && $log->is_debug && $log->debug("Stream request failed for track $trackId ($quality): " . $result->status_line);
+			return;
+		}
+
+		my $data = _decodeJson( ${ $result->contentRef } );
+		return unless $data && ref $data eq 'HASH';
+
+		return $data->{result}{stream} if $data->{result}{stream};
+		return $data->{stream} if $data->{stream};
 		return;
 	}
 
-	my $data = _decodeJson( ${ $result->contentRef } );
-	return unless $data && ref $data eq 'HASH';
-
-	return $data->{result}{stream};
+	return;
 }
 
 sub search {
@@ -408,7 +460,7 @@ sub trackToItem {
 		name     => $track->{title},
 		artist   => $artist,
 		duration => $track->{duration},
-		url      => 'zvuk://track/' . $track->{id},
+		url      => getTrackUri( $track->{id} ),
 		image    => $image,
 		type     => 'audio',
 	};

@@ -100,7 +100,7 @@ $sha = (Get-FileHash -Path $zipPath -Algorithm SHA1).Hash.ToLower()
 
 # jsDelivr works from Russia; GitHub release downloads often time out on Daphile.
 $zipUrl = "https://cdn.jsdelivr.net/gh/$user/$repo@$tag/releases/$zipName"
-$repoUrl = "https://cdn.jsdelivr.net/gh/$user/$repo@main/repository.xml"
+$repoUrl = "https://cdn.jsdelivr.net/gh/$user/$repo@$tag/repository.xml"
 
 $repositoryXml = @"
 <?xml version="1.0"?>
@@ -112,7 +112,7 @@ $repositoryXml = @"
 		<plugin name="Zvuk" version="$version" minTarget="7.9" maxTarget="*" category="musicservices">
 			<title lang="EN">SberZvuk</title>
 			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
-			<changes lang="EN">Use English-only plugin strings for LMS compatibility.</changes>
+			<changes lang="EN">Fix playback URLs, browse navigation, and stream auth headers.</changes>
 			<creator>$($config.creator)</creator>
 			<email>$($config.email)</email>
 			<url>$zipUrl</url>

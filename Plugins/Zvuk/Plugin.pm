@@ -26,7 +26,7 @@ sub initPlugin {
 
 	$prefs->init( {
 		token   => '',
-		quality => 'flac',
+		quality => 'high',
 		email   => '',
 	} );
 

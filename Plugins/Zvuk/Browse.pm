@@ -16,13 +16,36 @@ my $prefs = preferences('plugin.zvuk');
 sub feedUrl {
 	my ($params) = @_;
 	return sub {
-		my ( $client, $cb ) = @_;
-		handleFeed( $client, $cb, { params => $params } );
+		my ( $client, $cb, $args, @passthrough ) = @_;
+		handleFeed( $client, $cb, $args, @passthrough, { params => $params } );
 	};
 }
 
+sub _mergeParams {
+	my ( $args, @extra ) = @_;
+
+	my $params = { %{ $args->{params} || {} } };
+
+	for my $chunk (@extra) {
+		if ( ref $chunk eq 'HASH' ) {
+			if ( $chunk->{params} ) {
+				%$params = ( %$params, %{ $chunk->{params} } );
+			}
+			else {
+				%$params = ( %$params, %$chunk );
+			}
+		}
+	}
+
+	if ( defined $args->{search} ) {
+		$params->{search} = $args->{search};
+	}
+
+	return $params;
+}
+
 sub handleFeed {
-	my ( $client, $cb, $args ) = @_;
+	my ( $client, $cb, $args, @passthrough ) = @_;
 
 	unless ( Plugins::Zvuk::API::getToken() ) {
 		return $cb->( {
@@ -33,9 +56,9 @@ sub handleFeed {
 		} );
 	}
 
-	my $params = $args->{params} || {};
-	my $menu   = $params->{menu}   || 'root';
-	my $search = $args->{search} // $params->{search};
+	my $params = _mergeParams( $args || {}, @passthrough );
+	my $menu   = $params->{menu} || 'root';
+	my $search = $params->{search};
 
 	if ( defined $search && length $search ) {
 		main::DEBUGLOG && $log->is_debug && $log->debug("Search: $search");
@@ -65,7 +88,6 @@ sub handleFeed {
 		} );
 	}
 
-	# Root menu
 	my $feed = \&handleFeed;
 
 	$cb->( {
