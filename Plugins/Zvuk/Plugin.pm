@@ -47,11 +47,6 @@ sub initPlugin {
 		zvuk => 'Plugins::Zvuk::ProtocolHandler'
 	);
 
-	if ( Slim::Utils::Versions->compareVersions( $::VERSION, '8.0.0' ) >= 0 ) {
-		require Plugins::Zvuk::Importer;
-		Slim::Music::Import->addImporter( 'Plugins::Zvuk::Importer', { use => 1 } );
-	}
-
 	main::DEBUGLOG && $log->is_debug && $log->debug('Zvuk plugin initialized');
 }
 

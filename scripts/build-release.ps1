@@ -1,11 +1,21 @@
 # Build Zvuk LMS plugin zip and generate repository.xml for Additional Repositories.
 # Usage: .\scripts\build-release.ps1
+#
+# LMS on Linux expects forward slashes inside the zip (Zvuk/install.xml), not Windows backslashes.
 
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $ConfigPath = Join-Path $Root 'repo.config.json'
 $PluginSrc = Join-Path $Root 'Plugins\Zvuk'
 $DistDir = Join-Path $Root 'dist'
+$ReleasesDir = Join-Path $Root 'releases'
+
+if (-not (Test-Path $DistDir)) {
+	New-Item -ItemType Directory -Path $DistDir | Out-Null
+}
+if (-not (Test-Path $ReleasesDir)) {
+	New-Item -ItemType Directory -Path $ReleasesDir | Out-Null
+}
 
 if (-not (Test-Path $ConfigPath)) {
 	Write-Error "Missing repo.config.json in project root."
@@ -18,25 +28,60 @@ $config = Get-Content $ConfigPath -Raw | ConvertFrom-Json
 $version = $config.version
 $zipName = "Zvuk-$version.zip"
 $zipPath = Join-Path $DistDir $zipName
-
-if (-not (Test-Path $DistDir)) {
-	New-Item -ItemType Directory -Path $DistDir | Out-Null
-}
-
-if (Test-Path $zipPath) {
-	Remove-Item $zipPath -Force
-}
-
-# LMS expects the plugin folder "Zvuk" at the root of the zip archive.
-Compress-Archive -Path $PluginSrc -DestinationPath $zipPath -CompressionLevel Optimal
-
-$sha = (Get-FileHash -Path $zipPath -Algorithm SHA1).Hash.ToLower()
+$releaseZipPath = Join-Path $ReleasesDir $zipName
+$tag = "v$version"
 $user = $config.github_user
 $repo = $config.github_repo
-$tag = "v$version"
 
-$zipUrl = "https://github.com/$user/$repo/releases/download/$tag/$zipName"
-$repoUrl = "https://raw.githubusercontent.com/$user/$repo/main/repository.xml"
+function New-LmsPluginZip {
+	param(
+		[string]$SourceDir,
+		[string]$DestinationZip,
+		[string]$RootFolderName
+	)
+
+	Add-Type -AssemblyName System.IO.Compression
+	Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+	$parent = Split-Path -Parent $DestinationZip
+	if (-not (Test-Path $parent)) {
+		New-Item -ItemType Directory -Path $parent | Out-Null
+	}
+	if (Test-Path $DestinationZip) {
+		Remove-Item $DestinationZip -Force
+	}
+
+	$sourceRoot = (Resolve-Path $SourceDir).Path.TrimEnd('\')
+	$zip = [System.IO.Compression.ZipFile]::Open(
+		$DestinationZip,
+		[System.IO.Compression.ZipArchiveMode]::Create
+	)
+
+	try {
+		Get-ChildItem -Path $sourceRoot -Recurse -File | ForEach-Object {
+			$relative = $_.FullName.Substring($sourceRoot.Length).TrimStart('\', '/')
+			$entryName = ($RootFolderName + '/' + ($relative -replace '\\', '/'))
+			[void][System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+				$zip,
+				$_.FullName,
+				$entryName,
+				[System.IO.Compression.CompressionLevel]::Optimal
+			)
+		}
+	}
+	finally {
+		$zip.Dispose()
+	}
+}
+
+New-LmsPluginZip -SourceDir $PluginSrc -DestinationZip $zipPath -RootFolderName 'Zvuk'
+Copy-Item $zipPath $releaseZipPath -Force
+
+$sha = (Get-FileHash -Path $zipPath -Algorithm SHA1).Hash.ToLower()
+
+# jsDelivr works from Russia; GitHub release downloads often time out on Daphile.
+$zipUrl = "https://cdn.jsdelivr.net/gh/$user/$repo@$tag/releases/$zipName"
+$repoUrl = "https://cdn.jsdelivr.net/gh/$user/$repo@main/repository.xml"
 
 $repositoryXml = @"
 <?xml version="1.0"?>
@@ -51,8 +96,8 @@ $repositoryXml = @"
 			<title lang="RU">СберЗвук</title>
 			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
 			<desc lang="RU">Стриминг музыки из СберЗвук (zvuk.com) в Lyrion Music Server / Daphile.</desc>
-			<changes lang="EN">Enable plugin by default after install and move settings template into LMS HTML path.</changes>
-			<changes lang="RU">Плагин включается по умолчанию после установки, шаблон настроек перенесён в правильный HTML-путь LMS.</changes>
+			<changes lang="EN">Fix zip paths for Linux LMS; host plugin zip on jsDelivr.</changes>
+			<changes lang="RU">Исправлены пути в zip для Linux LMS; zip размещён на jsDelivr.</changes>
 			<creator>$($config.creator)</creator>
 			<email>$($config.email)</email>
 			<url>$zipUrl</url>
@@ -70,15 +115,15 @@ Copy-Item $repositoryPath (Join-Path $DistDir 'repository.xml') -Force
 Write-Host ""
 Write-Host "Build complete."
 Write-Host "  Zip:  $zipPath"
+Write-Host "  Release copy: $releaseZipPath"
 Write-Host "  SHA1: $sha"
 Write-Host "  Repo: $repositoryPath"
 Write-Host ""
-Write-Host "Additional Repositories URL (for LMS):"
+Write-Host "Additional Repositories URL (for LMS, use jsDelivr):"
 Write-Host "  $repoUrl"
 Write-Host ""
 Write-Host "Next steps:"
-Write-Host "  1. Edit repo.config.json (github_user, email)"
-Write-Host "  2. Re-run this script after config changes"
-Write-Host "  3. git add repository.xml && git commit && git push"
-Write-Host "  4. Create GitHub Release tag $tag and upload $zipName from dist\"
+Write-Host "  1. git add repository.xml releases/ Plugins/ && git commit && git push"
+Write-Host "  2. git tag $tag && git push origin $tag"
+Write-Host "  3. Optional: upload $zipName to GitHub Release $tag"
 Write-Host ""

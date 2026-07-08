@@ -1,6 +1,8 @@
 # Build artifacts (regenerate with scripts/build-release.ps1)
 dist/*.zip
 
+# releases/*.zip is committed for jsDelivr hosting
+
 # OS
 Thumbs.db
 .DS_Store
