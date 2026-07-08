@@ -18,17 +18,24 @@
 1. Откройте веб-интерфейс LMS: `http://<ip-вашего-daphile>:9000`
 2. **Settings → Manage Plugins**
 3. Внизу страницы — **Additional Repositories**
-4. Вставьте URL репозитория (пример, замените на свой после публикации):
+4. Вставьте URL репозитория (если `raw.githubusercontent.com` недоступен из России, используйте jsDelivr):
 
    ```
-   https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/zvukplugin/main/repository.xml
+   https://cdn.jsdelivr.net/gh/nikolaykindness/zvukplugin@main/repository.xml
+   ```
+
+   Альтернатива:
+
+   ```
+   https://raw.githubusercontent.com/nikolaykindness/zvukplugin/main/repository.xml
    ```
 
 5. Нажмите **Apply**
 6. Перезапустите LMS / Daphile
 7. Снова откройте **Manage Plugins** — появится секция репозитория
 8. Найдите **СберЗвук** → **Install** → **Apply** → перезапуск
-9. **Settings → Plugins → СберЗвук** — войдите в аккаунт
+9. Включите плагин на вкладке **Active Plugins** (галочка «СберЗвук») → **Apply** → перезапуск
+10. Нажмите **Settings** у плагина (или **Settings → Plugins → СберЗвук**) → войдите в аккаунт
 
 ### Шаг 2 — для автора: как опубликовать репозиторий
 

@@ -51,8 +51,8 @@ $repositoryXml = @"
 			<title lang="RU">СберЗвук</title>
 			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
 			<desc lang="RU">Стриминг музыки из СберЗвук (zvuk.com) в Lyrion Music Server / Daphile.</desc>
-			<changes lang="EN">Initial release: login, search, playlists, favorites, streaming.</changes>
-			<changes lang="RU">Первый релиз: вход, поиск, плейлисты, избранное, стриминг.</changes>
+			<changes lang="EN">Fix install.xml for LMS compatibility; settings page now available after enable.</changes>
+			<changes lang="RU">Исправлен install.xml для совместимости с LMS; настройки доступны после включения плагина.</changes>
 			<creator>$($config.creator)</creator>
 			<email>$($config.email)</email>
 			<url>$zipUrl</url>

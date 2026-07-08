@@ -15,8 +15,6 @@ my $prefs = preferences('plugin.zvuk');
 
 use constant URL_REGEXP => qr{^zvuk://([^/]+)/(.+)$};
 
-Slim::Player::ProtocolHandlers->registerHandler( zvuk => __PACKAGE__ );
-
 sub explodePlaylist {
 	my ( $class, $client, $url, $cb ) = @_;
 
