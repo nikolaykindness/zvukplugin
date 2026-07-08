@@ -5,7 +5,7 @@
 	<module>Plugins::Zvuk::Plugin</module>
 	<category>musicservices</category>
 
-	<version>0.1.3</version>
+	<version>0.1.4</version>
 	<description>PLUGIN_ZVUK_DESC</description>
 	<creator>SberZvuk Plugin</creator>
 	<email></email>

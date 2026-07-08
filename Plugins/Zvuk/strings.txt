@@ -1,5 +1,5 @@
 PLUGIN_ZVUK
-	EN	СберЗвук
+	EN	SberZvuk
 	RU	СберЗвук
 
 PLUGIN_ZVUK_DESC

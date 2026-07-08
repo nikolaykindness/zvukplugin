@@ -2,6 +2,7 @@
 # Usage: .\scripts\build-release.ps1
 #
 # LMS on Linux expects forward slashes inside the zip (Zvuk/install.xml), not Windows backslashes.
+# strings.txt must use LF line endings; CRLF breaks string ID parsing in Slim::Utils::Strings.
 
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
@@ -32,6 +33,23 @@ $releaseZipPath = Join-Path $ReleasesDir $zipName
 $tag = "v$version"
 $user = $config.github_user
 $repo = $config.github_repo
+
+function Normalize-PluginTextFiles {
+	param([string]$SourceDir)
+
+	$utf8NoBom = New-Object System.Text.UTF8Encoding $false
+	$extensions = @('.txt', '.html', '.xml', '.pm')
+
+	Get-ChildItem -Path $SourceDir -Recurse -File | Where-Object {
+		$extensions -contains $_.Extension
+	} | ForEach-Object {
+		$text = [System.IO.File]::ReadAllText($_.FullName)
+		$normalized = ($text -replace "`r`n", "`n") -replace "`r", "`n"
+		if ($normalized -ne $text) {
+			[System.IO.File]::WriteAllText($_.FullName, $normalized, $utf8NoBom)
+		}
+	}
+}
 
 function New-LmsPluginZip {
 	param(
@@ -74,6 +92,7 @@ function New-LmsPluginZip {
 	}
 }
 
+Normalize-PluginTextFiles -SourceDir $PluginSrc
 New-LmsPluginZip -SourceDir $PluginSrc -DestinationZip $zipPath -RootFolderName 'Zvuk'
 Copy-Item $zipPath $releaseZipPath -Force
 
@@ -96,8 +115,8 @@ $repositoryXml = @"
 			<title lang="RU">СберЗвук</title>
 			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
 			<desc lang="RU">Стриминг музыки из СберЗвук (zvuk.com) в Lyrion Music Server / Daphile.</desc>
-			<changes lang="EN">Fix zip paths for Linux LMS; host plugin zip on jsDelivr.</changes>
-			<changes lang="RU">Исправлены пути в zip для Linux LMS; zip размещён на jsDelivr.</changes>
+			<changes lang="EN">Fix plugin strings (LF line endings) and settings labels.</changes>
+			<changes lang="RU">Исправлены строки локализации (LF) и подписи в настройках.</changes>
 			<creator>$($config.creator)</creator>
 			<email>$($config.email)</email>
 			<url>$zipUrl</url>

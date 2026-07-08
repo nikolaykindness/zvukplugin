@@ -5,17 +5,17 @@
 		<title lang="RU">Репозиторий плагина СберЗвук</title>
 	</details>
 	<plugins>
-		<plugin name="Zvuk" version="0.1.3" minTarget="7.9" maxTarget="*" category="musicservices">
+		<plugin name="Zvuk" version="0.1.4" minTarget="7.9" maxTarget="*" category="musicservices">
 			<title lang="EN">SberZvuk</title>
 			<title lang="RU">СберЗвук</title>
 			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
 			<desc lang="RU">Стриминг музыки из СберЗвук (zvuk.com) в Lyrion Music Server / Daphile.</desc>
-			<changes lang="EN">Fix zip paths for Linux LMS; host plugin zip on jsDelivr.</changes>
-			<changes lang="RU">Исправлены пути в zip для Linux LMS; zip размещён на jsDelivr.</changes>
+			<changes lang="EN">Fix plugin strings (LF line endings) and settings labels.</changes>
+			<changes lang="RU">Исправлены строки локализации (LF) и подписи в настройках.</changes>
 			<creator>SberZvuk Plugin</creator>
 			<email></email>
-			<url>https://cdn.jsdelivr.net/gh/nikolaykindness/zvukplugin@v0.1.3/releases/Zvuk-0.1.3.zip</url>
-			<sha>c4738d6f438c617925f56d54d14a58a7613a9517</sha>
+			<url>https://cdn.jsdelivr.net/gh/nikolaykindness/zvukplugin@v0.1.4/releases/Zvuk-0.1.4.zip</url>
+			<sha>b26fc5fa129ce1a503b893ecc07678b3d3587b30</sha>
 		</plugin>
 	</plugins>
 </extensions>
