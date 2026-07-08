@@ -1,0 +1,64 @@
+[% SET pageTitle = "PLUGIN_ZVUK" %]
+[% PROCESS settings/header.html %]
+
+<h3>[% "PLUGIN_ZVUK_LOGIN_SECTION" | string %]</h3>
+
+[% IF isSignedIn %]
+	<p><strong>[% "PLUGIN_ZVUK_SIGNED_IN" | string %]</strong>
+	[% IF savedEmail %]([% savedEmail %])[% END %]</p>
+	<p>
+		<input type="submit" name="signout" value="[% 'PLUGIN_ZVUK_SIGN_OUT' | string %]" class="stdbutton" />
+	</p>
+[% ELSE %]
+	[% WRAPPER setting %]
+		<label for="pref_email">[% "PLUGIN_ZVUK_EMAIL" | string %]</label>
+		<input type="email" class="stdinput" name="pref_email" id="pref_email"
+			value="[% savedEmail %]" size="40" autocomplete="username" />
+	[% END %]
+
+	[% WRAPPER setting %]
+		<label for="pref_password">[% "PLUGIN_ZVUK_PASSWORD" | string %]</label>
+		<input type="password" class="stdinput" name="pref_password" id="pref_password"
+			size="40" autocomplete="current-password" />
+		<div class="help">[% "PLUGIN_ZVUK_LOGIN_HELP" | string %]</div>
+	[% END %]
+
+	<p>
+		<input type="submit" name="signin" value="[% 'PLUGIN_ZVUK_SIGN_IN' | string %]" class="stdbutton" />
+	</p>
+[% END %]
+
+[% WRAPPER setting %]
+	<label for="pref_quality">[% "PLUGIN_ZVUK_QUALITY" | string %]</label>
+	<select name="pref_quality" id="pref_quality" class="stdedit">
+		<option value="flac" [% IF prefs.quality == 'flac' %]selected[% END %]>
+			[% "PLUGIN_ZVUK_QUALITY_FLA" | string %]
+		</option>
+		<option value="high" [% IF prefs.quality == 'high' %]selected[% END %]>
+			[% "PLUGIN_ZVUK_QUALITY_HIGH" | string %]
+		</option>
+		<option value="mid" [% IF prefs.quality == 'mid' %]selected[% END %]>
+			[% "PLUGIN_ZVUK_QUALITY_MID" | string %]
+		</option>
+	</select>
+[% END %]
+
+<details [% IF !isSignedIn %]open[% END %]>
+	<summary><strong>[% "PLUGIN_ZVUK_TOKEN_ADVANCED" | string %]</strong></summary>
+
+	[% WRAPPER setting %]
+		<label for="pref_token">[% "PLUGIN_ZVUK_TOKEN" | string %]</label>
+		<input type="text" class="stdinput" name="pref_token" id="pref_token"
+			value="" size="60" autocomplete="off"
+			placeholder="[% IF isSignedIn %][% 'PLUGIN_ZVUK_TOKEN_SAVED' | string %][% ELSE %][% 'PLUGIN_ZVUK_TOKEN_PLACEHOLDER' | string %][% END %]" />
+		<div class="help">[% "PLUGIN_ZVUK_TOKEN_HELP" | string %]
+			<a href="[% profileUrl %]" target="_blank" rel="noopener">[% profileUrl %]</a>
+		</div>
+	[% END %]
+
+	<p>
+		<input type="submit" name="saveManualToken" value="[% 'PLUGIN_ZVUK_SAVE_TOKEN' | string %]" class="stdbutton" />
+	</p>
+</details>
+
+[% PROCESS settings/footer.html %]

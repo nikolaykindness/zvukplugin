@@ -1,0 +1,6 @@
+# Build artifacts (regenerate with scripts/build-release.ps1)
+dist/*.zip
+
+# OS
+Thumbs.db
+.DS_Store

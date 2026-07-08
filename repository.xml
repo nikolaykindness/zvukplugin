@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<extensions>
+	<details>
+		<title lang="EN">Zvuk Plugin Repository</title>
+		<title lang="RU">Репозиторий плагина СберЗвук</title>
+	</details>
+	<plugins>
+		<plugin name="Zvuk" version="0.1.0" minTarget="7.9" maxTarget="*" category="musicservices">
+			<title lang="EN">SberZvuk</title>
+			<title lang="RU">СберЗвук</title>
+			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
+			<desc lang="RU">Стриминг музыки из СберЗвук (zvuk.com) в Lyrion Music Server / Daphile.</desc>
+			<changes lang="EN">Initial release: login, search, playlists, favorites, streaming.</changes>
+			<changes lang="RU">Первый релиз: вход, поиск, плейлисты, избранное, стриминг.</changes>
+			<creator>nikolaykindness</creator>
+			<email>nikolaykindness@users.noreply.github.com</email>
+			<url>https://github.com/nikolaykindness/zvukplugin/releases/download/v0.1.0/Zvuk-0.1.0.zip</url>
+			<sha>7b8b8d4dad717021680762c0c0b0c1037e3fea74</sha>
+		</plugin>
+	</plugins>
+</extensions>
