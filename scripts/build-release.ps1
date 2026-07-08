@@ -107,16 +107,12 @@ $repositoryXml = @"
 <extensions>
 	<details>
 		<title lang="EN">Zvuk Plugin Repository</title>
-		<title lang="RU">Репозиторий плагина СберЗвук</title>
 	</details>
 	<plugins>
 		<plugin name="Zvuk" version="$version" minTarget="7.9" maxTarget="*" category="musicservices">
 			<title lang="EN">SberZvuk</title>
-			<title lang="RU">СберЗвук</title>
 			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
-			<desc lang="RU">Стриминг музыки из СберЗвук (zvuk.com) в Lyrion Music Server / Daphile.</desc>
-			<changes lang="EN">Fix plugin strings (LF line endings) and settings labels.</changes>
-			<changes lang="RU">Исправлены строки локализации (LF) и подписи в настройках.</changes>
+			<changes lang="EN">Use English-only plugin strings for LMS compatibility.</changes>
 			<creator>$($config.creator)</creator>
 			<email>$($config.email)</email>
 			<url>$zipUrl</url>

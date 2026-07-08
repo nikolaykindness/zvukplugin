@@ -2,20 +2,16 @@
 <extensions>
 	<details>
 		<title lang="EN">Zvuk Plugin Repository</title>
-		<title lang="RU">Репозиторий плагина СберЗвук</title>
 	</details>
 	<plugins>
-		<plugin name="Zvuk" version="0.1.4" minTarget="7.9" maxTarget="*" category="musicservices">
+		<plugin name="Zvuk" version="0.1.5" minTarget="7.9" maxTarget="*" category="musicservices">
 			<title lang="EN">SberZvuk</title>
-			<title lang="RU">СберЗвук</title>
 			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
-			<desc lang="RU">Стриминг музыки из СберЗвук (zvuk.com) в Lyrion Music Server / Daphile.</desc>
-			<changes lang="EN">Fix plugin strings (LF line endings) and settings labels.</changes>
-			<changes lang="RU">Исправлены строки локализации (LF) и подписи в настройках.</changes>
+			<changes lang="EN">Use English-only plugin strings for LMS compatibility.</changes>
 			<creator>SberZvuk Plugin</creator>
 			<email></email>
-			<url>https://cdn.jsdelivr.net/gh/nikolaykindness/zvukplugin@v0.1.4/releases/Zvuk-0.1.4.zip</url>
-			<sha>b26fc5fa129ce1a503b893ecc07678b3d3587b30</sha>
+			<url>https://cdn.jsdelivr.net/gh/nikolaykindness/zvukplugin@v0.1.5/releases/Zvuk-0.1.5.zip</url>
+			<sha>dab6d2b2630eaf873c14a2113c75376fc85acea1</sha>
 		</plugin>
 	</plugins>
 </extensions>

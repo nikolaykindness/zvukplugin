@@ -1,127 +1,95 @@
 PLUGIN_ZVUK
 	EN	SberZvuk
-	RU	СберЗвук
 
 PLUGIN_ZVUK_DESC
 	EN	Stream music from SberZvuk (zvuk.com) directly in Lyrion Music Server.
-	RU	Стриминг музыки из сервиса СберЗвук (zvuk.com) напрямую в Lyrion Music Server.
 
 PLUGIN_ZVUK_TOKEN
 	EN	Auth token
-	RU	Токен авторизации
 
 PLUGIN_ZVUK_TOKEN_HELP
 	EN	Log in at zvuk.com, open https://zvuk.com/api/tiny/profile and copy the token value.
-	RU	Войдите на zvuk.com, откройте https://zvuk.com/api/tiny/profile и скопируйте значение поля token.
 
 PLUGIN_ZVUK_LOGIN_SECTION
 	EN	Sign in to SberZvuk
-	RU	Вход в СберЗвук
 
 PLUGIN_ZVUK_EMAIL
 	EN	Email
-	RU	Электронная почта
 
 PLUGIN_ZVUK_PASSWORD
 	EN	Password
-	RU	Пароль
 
 PLUGIN_ZVUK_SIGN_IN
 	EN	Sign in
-	RU	Войти
 
 PLUGIN_ZVUK_SIGN_OUT
 	EN	Sign out
-	RU	Выйти
 
 PLUGIN_ZVUK_SIGNED_IN
 	EN	Signed in successfully
-	RU	Вы вошли в аккаунт
 
 PLUGIN_ZVUK_SIGNED_OUT
 	EN	Signed out
-	RU	Вы вышли из аккаунта
 
 PLUGIN_ZVUK_LOGIN_HELP
 	EN	Use the email and password from your zvuk.com account. If you sign in with phone or Sber ID only, link email and password in your profile settings on zvuk.com first.
-	RU	Используйте email и пароль от аккаунта на zvuk.com. Если вы входите только по телефону или Сбер ID, сначала привяжите email и пароль в настройках профиля на zvuk.com.
 
 PLUGIN_ZVUK_LOGIN_EMPTY
 	EN	Please enter email and password.
-	RU	Введите email и пароль.
 
 PLUGIN_ZVUK_LOGIN_FAILED
 	EN	Sign in failed. Check your email and password, or use manual token entry below.
-	RU	Не удалось войти. Проверьте email и пароль или введите токен вручную ниже.
 
 PLUGIN_ZVUK_LOGIN_OK
 	EN	Signed in successfully.
-	RU	Вход выполнен успешно.
 
 PLUGIN_ZVUK_TOKEN_ADVANCED
 	EN	Advanced: enter token manually
-	RU	Дополнительно: ввести токен вручную
 
 PLUGIN_ZVUK_TOKEN_PLACEHOLDER
 	EN	Paste token here
-	RU	Вставьте токен сюда
 
 PLUGIN_ZVUK_SAVE_TOKEN
 	EN	Save token
-	RU	Сохранить токен
 
 PLUGIN_ZVUK_QUALITY
 	EN	Stream quality
-	RU	Качество потока
 
 PLUGIN_ZVUK_QUALITY_FLA
 	EN	FLAC (best)
-	RU	FLAC (максимум)
 
 PLUGIN_ZVUK_QUALITY_HIGH
 	EN	MP3 320 kbps
-	RU	MP3 320 кбит/с
 
 PLUGIN_ZVUK_QUALITY_MID
 	EN	MP3 128 kbps
-	RU	MP3 128 кбит/с
 
 PLUGIN_ZVUK_REQUIRES_TOKEN
 	EN	Please enter your SberZvuk token in plugin settings.
-	RU	Введите токен СберЗвук в настройках плагина.
 
 PLUGIN_ZVUK_TOKEN_EMPTY
 	EN	Token cannot be empty.
-	RU	Токен не может быть пустым.
 
 PLUGIN_ZVUK_TOKEN_SAVED
 	EN	Settings saved.
-	RU	Настройки сохранены.
 
 PLUGIN_ZVUK_TOKEN_INVALID
 	EN	Token validation failed. Check the token and try again.
-	RU	Не удалось проверить токен. Проверьте значение и повторите попытку.
 
 PLUGIN_ZVUK_SEARCH
 	EN	Search
-	RU	Поиск
 
 PLUGIN_ZVUK_PLAYLISTS
 	EN	Playlists
-	RU	Плейлисты
 
 PLUGIN_ZVUK_ALBUMS
 	EN	Albums
-	RU	Альбомы
 
 PLUGIN_ZVUK_FAVORITES
 	EN	Favorites
-	RU	Избранное
 
 PLUGIN_ZVUK_NO_RESULTS
 	EN	No results found.
-	RU	Ничего не найдено.
 
 PLUGIN_ZVUK_API_ERROR
 	EN	API request failed.
-	RU	Ошибка запроса к API.

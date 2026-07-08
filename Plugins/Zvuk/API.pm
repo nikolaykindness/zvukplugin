@@ -26,7 +26,7 @@ sub _baseHeaders {
 	return (
 		'User-Agent'      => USER_AGENT,
 		'Accept'          => 'application/json, text/plain, */*',
-		'Accept-Language' => 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+		'Accept-Language' => 'en-US,en;q=0.9',
 		'Referer'         => BASE_URL . '/',
 		'Origin'          => BASE_URL,
 	);
