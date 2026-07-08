@@ -5,11 +5,11 @@
 	<module>Plugins::Zvuk::Plugin</module>
 	<category>musicservices</category>
 
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 	<description>PLUGIN_ZVUK_DESC</description>
 	<creator>SberZvuk Plugin</creator>
 	<email></email>
-	<defaultState>disabled</defaultState>
+	<defaultState>enabled</defaultState>
 	<optionsURL>plugins/Zvuk/settings/basic.html</optionsURL>
 	<homepageURL>https://github.com/nikolaykindness/zvukplugin</homepageURL>
 	<type>2</type>

@@ -34,7 +34,7 @@
 6. Перезапустите LMS / Daphile
 7. Снова откройте **Manage Plugins** — появится секция репозитория
 8. Найдите **СберЗвук** → **Install** → **Apply** → перезапуск
-9. Включите плагин на вкладке **Active Plugins** (галочка «СберЗвук») → **Apply** → перезапуск
+9. После перезапуска плагин должен сразу появиться в **Active Plugins**
 10. Нажмите **Settings** у плагина (или **Settings → Plugins → СберЗвук**) → войдите в аккаунт
 
 ### Шаг 2 — для автора: как опубликовать репозиторий
@@ -94,7 +94,7 @@ https://raw.githubusercontent.com/ВАШ_ЛОГИН/zvukplugin/main/repository.x
 1. Увеличьте `version` в `repo.config.json` и `Plugins/Zvuk/install.xml`
 2. Запустите `.\scripts\build-release.ps1`
 3. Закоммитьте обновлённый `repository.xml`
-4. Создайте новый GitHub Release (`v0.1.1` и т.д.) с новым zip
+4. Создайте новый GitHub Release (`v0.1.2` и т.д.) с новым zip
 5. Пользователи: **Manage Plugins → Apply** — LMS предложит обновление
 
 ## Ручная установка (без репозитория)

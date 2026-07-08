@@ -5,17 +5,17 @@
 		<title lang="RU">Репозиторий плагина СберЗвук</title>
 	</details>
 	<plugins>
-		<plugin name="Zvuk" version="0.1.1" minTarget="7.9" maxTarget="*" category="musicservices">
+		<plugin name="Zvuk" version="0.1.2" minTarget="7.9" maxTarget="*" category="musicservices">
 			<title lang="EN">SberZvuk</title>
 			<title lang="RU">СберЗвук</title>
 			<desc lang="EN">Stream music from SberZvuk (zvuk.com) in Lyrion Music Server / Daphile.</desc>
 			<desc lang="RU">Стриминг музыки из СберЗвук (zvuk.com) в Lyrion Music Server / Daphile.</desc>
-			<changes lang="EN">Fix install.xml for LMS compatibility; settings page now available after enable.</changes>
-			<changes lang="RU">Исправлен install.xml для совместимости с LMS; настройки доступны после включения плагина.</changes>
+			<changes lang="EN">Enable plugin by default after install and move settings template into LMS HTML path.</changes>
+			<changes lang="RU">Плагин включается по умолчанию после установки, шаблон настроек перенесён в правильный HTML-путь LMS.</changes>
 			<creator>SberZvuk Plugin</creator>
 			<email></email>
-			<url>https://github.com/nikolaykindness/zvukplugin/releases/download/v0.1.1/Zvuk-0.1.1.zip</url>
-			<sha>ef630fe5a01ba324cc121c30fa3b15c0604061ea</sha>
+			<url>https://github.com/nikolaykindness/zvukplugin/releases/download/v0.1.2/Zvuk-0.1.2.zip</url>
+			<sha>e64c837f14271e47389d3905662d8c35179ddebd</sha>
 		</plugin>
 	</plugins>
 </extensions>
